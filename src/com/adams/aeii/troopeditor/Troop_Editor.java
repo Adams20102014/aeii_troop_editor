@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -59,6 +60,14 @@ public class Troop_Editor extends JFrame {
 
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
+//        System.setProperty("Quaqua.tabLayoutPolicy", "wrap");
+        try {
+//            JFrame.setDefaultLookAndFeelDecorated(true);
+            String lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
+//            UIManager.setLookAndFeel("ch.randelshofer.quaqua.QuaquaLookAndFeel");
+            UIManager.setLookAndFeel(lookAndFeel);
+        } catch (Exception e) {
+        }
         new Troop_Editor();
     }
 }
