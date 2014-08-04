@@ -3,9 +3,10 @@ package com.adams.aeii.troopeditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import javax.swing.Icon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
@@ -38,16 +39,13 @@ class Button_Listener implements ActionListener {
    
     File file ;
     
-    int i = 0;
-    
     private final Troop_Attribute pte;
-    private final Image image;
-    private final Troop_Editor te;
+    private Image image;
+    private JLabel jl_image;
     
-    public Button_Listener(Troop_Attribute pte, Image image, Troop_Editor te) {
+    public Button_Listener(Troop_Attribute pte,JLabel jl_image) {
         this.pte = pte;
-        this.image = image;
-        this.te = te;
+        this.jl_image = jl_image;
     }
 
     
@@ -77,11 +75,12 @@ class Button_Listener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        if(e.getActionCommand().equals("打开兵种dat文件")) {
+        if(e.getActionCommand().equals("打开兵种文件")) {
             fileChooser = new JFileChooser("打开文件");
             int state = fileChooser.showOpenDialog(fileChooser);
             if(state == JFileChooser.APPROVE_OPTION) {
                 try {
+                    int i = 0;
                     File dir = fileChooser.getCurrentDirectory();
                     troop_dat = fileChooser.getSelectedFile().getName();
                     file = new File(dir,troop_dat);
@@ -99,6 +98,7 @@ class Button_Listener implements ActionListener {
                             i++;
                         }else if(i == 3) { 
                             attack = temp;
+//                            System.out.println(attack);
                             i++;
                         }else if(i == 4) {
                             physical_defence = temp;
@@ -135,16 +135,17 @@ class Button_Listener implements ActionListener {
                     JOptionPane.showMessageDialog(fileChooser, "打开文件成功！", "提示对话框", JOptionPane.INFORMATION_MESSAGE);
                     pte.initJTextField(price,max_hp, movement_point, attack, physical_defence, magical_defence, hp_growth, movement_growth, attack_growth, physical_defence_growth, magical_defence_growth, max_attack_range, min_attack_range);
                     pte.initJRadioButton(attack_type);
-                    image.getUnits();
+//                    System.out.println(troop_dat);
+                    image = new Image();
                     image.setTroopImage(troop_dat);
-                    te.getContentPane().add(image.initJpImage());
+                    jl_image.setIcon((Icon) image.getTroopImage());
                     read.close();
                     buRead.close();
-                } catch (IOException ex) {  
+                } catch (IOException ex) {
                 } 
             }
             
-        }else if(e.getActionCommand().equals("保存兵种dat文件")) {
+        }else if(e.getActionCommand().equals("保存兵种文件")) {
             fileChooser = new JFileChooser("保存文件");
             int state = fileChooser.showSaveDialog(fileChooser);
             if(state== JFileChooser.APPROVE_OPTION){
@@ -160,6 +161,10 @@ class Button_Listener implements ActionListener {
                 }
             }
         }
+    }
+
+    private Icon getTroopImage() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

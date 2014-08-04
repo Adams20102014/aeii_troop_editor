@@ -5,13 +5,14 @@
  */
 package com.adams.aeii.troopeditor;
 
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -19,16 +20,16 @@ import javax.swing.JFrame;
  */
 public class Troop_Editor extends JFrame {
 
-    private Troop_Attribute ta;
-    private Button btn;
-    private Image image;
+    private final Troop_Attribute ta;
+    private final Button btn;
+    private JPanel jp_image;
+    private JLabel jl_image;
 
     public Troop_Editor() throws IOException {
         this.setTitle("AEII_Troop_Editor");
-        this.getContentPane();
-        this.setBounds(300, 50, 800, 400);
+        this.setBounds(300, 50, 400, 600);
         this.setResizable(false);
-        this.setLayout(new GridLayout(2, 2));
+        this.setLayout(null);
         ImageIcon icon = new ImageIcon(this.getClass().getResource("image/aeii.png"));
         this.setIconImage(icon.getImage());
 
@@ -39,12 +40,21 @@ public class Troop_Editor extends JFrame {
             }
         });
         ta = new Troop_Attribute();
-        image = new Image();
-        btn = new Button(ta,image,this);
-       
+        initJpImage();
+        btn = new Button(ta, jl_image);
+
         this.getContentPane().add(ta.initJtTroopEditor());
         this.getContentPane().add(btn.initButton());
+        this.getContentPane().add(jp_image);
         this.show();
+    }
+
+    public void initJpImage() {
+        jp_image = new JPanel();
+        jp_image.setBorder(BorderFactory.createTitledBorder("兵种图片显示："));
+        jl_image = new JLabel();
+        jp_image.setBounds(280, 20, 120, 80);
+        jp_image.add(jl_image);
     }
 
     public static void main(String[] args) throws IOException {

@@ -13,25 +13,23 @@ public class Button {
     private JPanel jp_button;
     private JButton open_troop;
     private JButton save_troop;
-    private Troop_Attribute pte;
-    private Image image;
-    private Troop_Editor te;
+    private final Troop_Attribute pte;
+    private final JLabel jl_image;
     
-    public Button(Troop_Attribute pte,Image image,Troop_Editor te) {
+    public Button(Troop_Attribute pte,JLabel jl_image) {
         this.pte = pte;
-        this.image = image;
-        this.te = te;
+        this.jl_image = jl_image;
     }
     
     public JPanel initButton() {
         jp_button = new JPanel(new GridLayout(2,1));
-        open_troop = new JButton("打开兵种dat文件");
-        open_troop.addActionListener(new Button_Listener(pte,image,te));
-        save_troop = new JButton("保存兵种dat文件");
-        save_troop.addActionListener(new Button_Listener(pte,image,te));
-        
+        open_troop = new JButton("打开兵种文件");
+        open_troop.addActionListener(new Button_Listener(pte,jl_image));
+        save_troop = new JButton("保存兵种文件");
+        save_troop.addActionListener(new Button_Listener(pte,jl_image));
         jp_button.add(open_troop);
         jp_button.add(save_troop);
+        jp_button.setBounds(280, 510, 120, 60);
         return jp_button;
     }
 }
