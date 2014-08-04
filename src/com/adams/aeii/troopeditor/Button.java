@@ -14,17 +14,21 @@ public class Button {
     private JButton open_troop;
     private JButton save_troop;
     private Troop_Attribute pte;
+    private Image image;
+    private Troop_Editor te;
     
-    public Button(Troop_Attribute pte) {
+    public Button(Troop_Attribute pte,Image image,Troop_Editor te) {
         this.pte = pte;
+        this.image = image;
+        this.te = te;
     }
     
     public JPanel initButton() {
         jp_button = new JPanel(new GridLayout(2,1));
         open_troop = new JButton("打开兵种dat文件");
-        open_troop.addActionListener(new Button_Listener(pte));
+        open_troop.addActionListener(new Button_Listener(pte,image,te));
         save_troop = new JButton("保存兵种dat文件");
-        save_troop.addActionListener(new Button_Listener(pte));
+        save_troop.addActionListener(new Button_Listener(pte,image,te));
         
         jp_button.add(open_troop);
         jp_button.add(save_troop);

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.adams.aeii.troopeditor;
 
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -17,21 +17,21 @@ import javax.swing.JFrame;
  *
  * @author st000120
  */
-public class Troop_Editor  extends JFrame {
+public class Troop_Editor extends JFrame {
 
-    
     private Troop_Attribute ta;
     private Button btn;
-    
-    public Troop_Editor() {
+    private Image image;
+
+    public Troop_Editor() throws IOException {
         this.setTitle("AEII_Troop_Editor");
         this.getContentPane();
-        this.setBounds(300,50,800,400);
+        this.setBounds(300, 50, 800, 400);
         this.setResizable(false);
-        this.setLayout(new GridLayout(2,1));
+        this.setLayout(new GridLayout(2, 2));
         ImageIcon icon = new ImageIcon(this.getClass().getResource("image/aeii.png"));
         this.setIconImage(icon.getImage());
-        
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -39,13 +39,15 @@ public class Troop_Editor  extends JFrame {
             }
         });
         ta = new Troop_Attribute();
-        btn = new Button(ta);
+        image = new Image();
+        btn = new Button(ta,image,this);
+       
         this.getContentPane().add(ta.initJtTroopEditor());
         this.getContentPane().add(btn.initButton());
-        this.show();     
+        this.show();
     }
-    
-     public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         new Troop_Editor();
     }

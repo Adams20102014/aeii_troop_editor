@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -13,6 +15,7 @@ class Button_Listener implements ActionListener {
 
     private JFileChooser fileChooser;
     
+    private String price;
     private String max_hp;
     private String movement_point;
     private String attack;
@@ -29,20 +32,27 @@ class Button_Listener implements ActionListener {
    // private String name;
     private String temp;
     private String troop_info;
+    
+    private String troop_dat;
 //  private String abilities;  
    
     File file ;
     
-    int i = 1;
+    int i = 0;
     
-    private Troop_Attribute pte;
+    private final Troop_Attribute pte;
+    private final Image image;
+    private final Troop_Editor te;
     
-    public Button_Listener(Troop_Attribute pte) {
+    public Button_Listener(Troop_Attribute pte, Image image, Troop_Editor te) {
         this.pte = pte;
+        this.image = image;
+        this.te = te;
     }
 
     
     public void getString () {
+        price = pte.getJfPrice();
         max_hp = pte.getJfMaxHpText();
         movement_point = pte.getJfMovementPointText();
         attack = pte.getJfAttackText();
@@ -60,7 +70,7 @@ class Button_Listener implements ActionListener {
     
     public String getTroopInfo () {
         this.getString();
-        troop_info = max_hp + "\n" + movement_point + "\n" + attack + "\n" + physical_defence + "\n" + magical_defence + "\n" + attack_type + "\n" + hp_growth + "\n" + movement_growth + "\n" + attack_growth + "\n" + physical_defence_growth + "\n" + magical_defence_growth + "\n" + max_attack_range + "\n" + min_attack_range;
+        troop_info = price + "\r\n" + max_hp + "\r\n" + movement_point + "\r\n" + attack + "\r\n" + physical_defence + "\r\n" + magical_defence + "\r\n" + attack_type + "\r\n" + hp_growth + "\r\n" + movement_growth + "\r\n" + attack_growth + "\r\n" + physical_defence_growth + "\r\n" + magical_defence_growth + "\r\n" + max_attack_range + "\r\n" + min_attack_range;
         return troop_info;
     }
     
@@ -72,11 +82,16 @@ class Button_Listener implements ActionListener {
             int state = fileChooser.showOpenDialog(fileChooser);
             if(state == JFileChooser.APPROVE_OPTION) {
                 try {
-                    file = fileChooser.getSelectedFile();
+                    File dir = fileChooser.getCurrentDirectory();
+                    troop_dat = fileChooser.getSelectedFile().getName();
+                    file = new File(dir,troop_dat);
                     FileReader read = new FileReader(file);
                     BufferedReader buRead = new BufferedReader(read);
                     while((temp = buRead.readLine()) != null) {
-                        if(i == 1) {
+                        if(i == 0) {
+                            price = temp;
+                            i++;
+                        }else if(i == 1) {
                             max_hp = temp;
                             i++;
                         }else if(i == 2) {
@@ -117,9 +132,12 @@ class Button_Listener implements ActionListener {
                             i++;
                         }
                     }
-                    
-                    pte.initJTextField(max_hp, movement_point, attack, physical_defence, magical_defence, hp_growth, movement_growth, attack_growth, physical_defence_growth, magical_defence_growth, max_attack_range, min_attack_range);
+                    JOptionPane.showMessageDialog(fileChooser, "打开文件成功！", "提示对话框", JOptionPane.INFORMATION_MESSAGE);
+                    pte.initJTextField(price,max_hp, movement_point, attack, physical_defence, magical_defence, hp_growth, movement_growth, attack_growth, physical_defence_growth, magical_defence_growth, max_attack_range, min_attack_range);
                     pte.initJRadioButton(attack_type);
+                    image.getUnits();
+                    image.setTroopImage(troop_dat);
+                    te.getContentPane().add(image.initJpImage());
                     read.close();
                     buRead.close();
                 } catch (IOException ex) {  
@@ -131,10 +149,11 @@ class Button_Listener implements ActionListener {
             int state = fileChooser.showSaveDialog(fileChooser);
             if(state== JFileChooser.APPROVE_OPTION){
                 try{
-                     file = fileChooser.getSelectedFile();
+                    file = fileChooser.getSelectedFile();
                     FileWriter writer = new FileWriter(file);
                     BufferedWriter buWriter = new BufferedWriter(writer);
                     buWriter.write(getTroopInfo());
+                    JOptionPane.showMessageDialog(fileChooser, "保存成功！", "提示对话框", JOptionPane.INFORMATION_MESSAGE);
                     buWriter.close();
                     writer.close();
                 }catch(IOException ex) {
