@@ -15,7 +15,7 @@ public class Button {
     private JButton save_troop;
     private final Troop_Attribute pte;
     private final JLabel jl_image;
-    private Troop_Editor te;
+    private final Troop_Editor te;
     
     public Button(Troop_Attribute pte,JLabel jl_image,Troop_Editor te) {
         this.pte = pte;

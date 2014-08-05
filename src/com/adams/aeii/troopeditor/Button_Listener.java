@@ -41,8 +41,8 @@ class Button_Listener implements ActionListener {
     
     private final Troop_Attribute pte;
     private Image image;
-    private JLabel jl_image;
-    private Troop_Editor te;
+    private final JLabel jl_image;
+    private final Troop_Editor te;
     
     public Button_Listener(Troop_Attribute pte,JLabel jl_image,Troop_Editor te) {
         this.pte = pte;

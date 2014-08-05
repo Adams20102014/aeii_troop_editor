@@ -1,9 +1,6 @@
 package com.adams.aeii.troopeditor;
 
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.Vector;
 import javax.swing.*;
 
