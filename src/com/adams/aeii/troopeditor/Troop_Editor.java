@@ -5,15 +5,16 @@
  */
 package com.adams.aeii.troopeditor;
 
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.*;
 
 /**
  *
@@ -28,9 +29,12 @@ public class Troop_Editor extends JFrame {
 
     public Troop_Editor() throws IOException {
         this.setTitle("AEII_Troop_Editor");
-        this.setBounds(300, 50, 400, 600);
         this.setResizable(false);
-        this.setLayout(null);
+        this.getContentPane().setPreferredSize(new Dimension(600,600));
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setLayout(null);
+         
         ImageIcon icon = new ImageIcon(this.getClass().getResource("image/aeii.png"));
         this.setIconImage(icon.getImage());
 
@@ -42,19 +46,19 @@ public class Troop_Editor extends JFrame {
         });
         ta = new Troop_Attribute();
         initJpImage();
-        btn = new Button(ta, jl_image);
+        btn = new Button(ta, jl_image,this);
 
         this.getContentPane().add(ta.initJtTroopEditor());
         this.getContentPane().add(btn.initButton());
         this.getContentPane().add(jp_image);
-        this.show();
+        this.setVisible(true);
     }
 
     public void initJpImage() {
         jp_image = new JPanel();
         jp_image.setBorder(BorderFactory.createTitledBorder("兵种图片显示："));
         jl_image = new JLabel();
-        jp_image.setBounds(280, 20, 120, 80);
+        jp_image.setBounds(480, 20, 120, 80);
         jp_image.add(jl_image);
     }
 
@@ -63,10 +67,10 @@ public class Troop_Editor extends JFrame {
 //        System.setProperty("Quaqua.tabLayoutPolicy", "wrap");
         try {
 //            JFrame.setDefaultLookAndFeelDecorated(true);
-            String lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
+//            String lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
 //            UIManager.setLookAndFeel("ch.randelshofer.quaqua.QuaquaLookAndFeel");
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         }
         new Troop_Editor();
     }

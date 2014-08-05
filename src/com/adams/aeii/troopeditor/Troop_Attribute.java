@@ -2,7 +2,9 @@ package com.adams.aeii.troopeditor;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Vector;
 import javax.swing.*;
 
 /**
@@ -77,14 +79,27 @@ public class Troop_Attribute {
     private JRadioButton jr_magical;
     private ButtonGroup bg_attack_type;
 
-    private JComboBox jc_abilities;
-    private JComboBox jc_learnable_abilities;
+//    private JComboBox jc_abilities;
+//    private JComboBox jc_learnable_abilities;
+    private JList jl_abilities;
+    private JList jl_base_abilities;
+    private JList jl_learnable_abilities;
+    
+    private JButton base_into;
+    private JButton base_out;
+    private JButton learnable_into;
+    private JButton learnable_out;
 
-    private String[] str_abilities;
-    private String[] str_learnable_abilities;
+    Vector base_abilities;
+    Vector learnable_abilities;
+    private String[] abilities;
 //    private String[] str_learnable_abilities;
 
 //    private Image image;
+    
+    private JScrollPane sp_abilities;
+    private JScrollPane sp_base_abilities;
+    private JScrollPane sp_learnable_abilities;
     
     public Troop_Attribute() {
 
@@ -94,12 +109,13 @@ public class Troop_Attribute {
         jt_troop_editor = new JTabbedPane();
         jt_troop_editor.addTab("基础数据设定", initJpDatabase());
         jt_troop_editor.addTab("特殊能力设定", initJpAbilities());
-        jt_troop_editor.setBounds(0, 0, 280, 600);
+        jt_troop_editor.setBounds(0, 0, 480, 600);
         return jt_troop_editor;
     }
 
     public JPanel initJpDatabase () {
-        jp_database = new JPanel (new FlowLayout(FlowLayout.LEFT));
+        jp_database = new JPanel ();
+        jp_database.setLayout(null);
         jp_database.add(initJpPrice());
         jp_database.add(initJpHp());
         jp_database.add(initJpMovement());
@@ -128,11 +144,12 @@ public class Troop_Attribute {
 
     public JPanel initJpPrice() {
         jp_price = new JPanel(new GridLayout(1, 1));
-        jp_price.setBorder(BorderFactory.createTitledBorder("价格值设定(请输入正常正整数)"));
+        jp_price.setBorder(BorderFactory.createTitledBorder("价格值设定"));
         jl_price = new JLabel("兵种价格：");
         jf_price = new JTextField(10);
         jp_price.add(jl_price);
         jp_price.add(jf_price);
+        jp_price.setBounds(10, 10, 200, 50);
         return jp_price;
     }
 
@@ -153,7 +170,7 @@ public class Troop_Attribute {
      */
     public JPanel initJpHp() {
         jp_hp = new JPanel(new GridLayout(2, 2));
-        jp_hp.setBorder(BorderFactory.createTitledBorder("HP值设定(请输入正常正整数)"));
+        jp_hp.setBorder(BorderFactory.createTitledBorder("HP值设定"));
         jl_max_hp = new JLabel("最大HP值：");
         jl_hp_growth = new JLabel("HP成长值：");
         jf_max_hp = new JTextField(10);
@@ -162,12 +179,14 @@ public class Troop_Attribute {
         jp_hp.add(jf_max_hp);
         jp_hp.add(jl_hp_growth);
         jp_hp.add(jf_hp_growth);
+        jp_hp.setBounds(10,65,200,70);
+//        jp_hp.setPreferredSize();
         return jp_hp;
     }
 
     public JPanel initJpMovement() {
         jp_movement = new JPanel(new GridLayout(2, 2));
-        jp_movement.setBorder(BorderFactory.createTitledBorder("移动力值设定(请输入正常正整数)"));
+        jp_movement.setBorder(BorderFactory.createTitledBorder("移动力值设定"));
         jl_movement_point = new JLabel("移动力：");
         jl_movement_growth = new JLabel("移动力成长值：");
         jf_movement_point = new JTextField(10);
@@ -176,12 +195,13 @@ public class Troop_Attribute {
         jp_movement.add(jf_movement_point);
         jp_movement.add(jl_movement_growth);
         jp_movement.add(jf_movement_growth);
+        jp_movement.setBounds(10,140,250,70);
         return jp_movement;
     }
 
     public JPanel initJpAttack() {
         jp_attack = new JPanel(new GridLayout(2, 2));
-        jp_attack.setBorder(BorderFactory.createTitledBorder("攻击力值设定(请输入正常正整数)"));
+        jp_attack.setBorder(BorderFactory.createTitledBorder("攻击力值设定"));
         jl_attack = new JLabel("攻击力：");
         jl_attack_growth = new JLabel("攻击力成长值：");
         jf_attack = new JTextField(10);
@@ -190,12 +210,13 @@ public class Troop_Attribute {
         jp_attack.add(jf_attack);
         jp_attack.add(jl_attack_growth);
         jp_attack.add(jf_attack_growth);
+        jp_attack.setBounds(10,215,250,70);
         return jp_attack;
     }
 
     public JPanel initJpDefence() {
         jp_defence = new JPanel(new GridLayout(4, 2));
-        jp_defence.setBorder(BorderFactory.createTitledBorder("防御力值设定(请输入正常正整数)"));
+        jp_defence.setBorder(BorderFactory.createTitledBorder("防御力值设定"));
         jl_physical_defence = new JLabel("物理防御力：");
         jl_physical_defence_growth = new JLabel("物理防御力成长值：");
         jl_magical_defence = new JLabel("法术防御力：");
@@ -212,12 +233,13 @@ public class Troop_Attribute {
         jp_defence.add(jf_magical_defence);
         jp_defence.add(jl_magical_defence_growth);
         jp_defence.add(jf_magical_defence_growth);
+        jp_defence.setBounds(10,290,250,120);
         return jp_defence;
     }
 
     public JPanel initJpAttackRange() {
         jp_attack_range = new JPanel(new GridLayout(2, 2));
-        jp_attack_range.setBorder(BorderFactory.createTitledBorder("攻击距离值设定(请输入正常正整数)"));
+        jp_attack_range.setBorder(BorderFactory.createTitledBorder("攻击距离值设定"));
         jl_max_attack_range = new JLabel("最大攻击距离：");
         jl_min_attack_range = new JLabel("最小攻击距离：");
         jf_max_attack_range = new JTextField(10);
@@ -226,6 +248,7 @@ public class Troop_Attribute {
         jp_attack_range.add(jf_max_attack_range);
         jp_attack_range.add(jl_min_attack_range);
         jp_attack_range.add(jf_min_attack_range);
+        jp_attack_range.setBounds(10,415,250,70);
         return jp_attack_range;
     }
 
@@ -239,21 +262,94 @@ public class Troop_Attribute {
         bg_attack_type.add(jr_magical);
         jp_attack_type.add(jr_physical);
         jp_attack_type.add(jr_magical);
+        jp_attack_type.setBounds(10,490,300,50);
         return jp_attack_type;
     }
 
     public JPanel initJpAbilities() {
         jp_abilities = new JPanel();
+        jp_abilities.setLayout(null);
         jp_abilities.setBorder(BorderFactory.createTitledBorder("特殊能力设定"));
-        str_abilities = new String[]{"None", "可以占领建筑物（城堡除外）", "在水中获得攻防属性加成", "在森林中获得攻防属性加成", "在山区获得攻防属性加成"};
-        jc_abilities = new JComboBox(str_abilities);
-        jc_abilities.setBorder(BorderFactory.createTitledBorder("自带特殊能力"));
-        str_learnable_abilities = new String[]{"None", "可以占领建筑物（城堡除外）", "在水中获得攻防属性加成", "在森林中获得攻防属性加成", "在山区获得攻防属性加成"};
-        jc_learnable_abilities = new JComboBox(str_learnable_abilities);
-        jc_learnable_abilities.setBorder(BorderFactory.createTitledBorder("可学习特殊能力"));
-//        jc_abilities.setBounds(0, 0, 100, 400);
-        jp_abilities.add(jc_abilities);
-        jp_abilities.add(jc_learnable_abilities);
+        abilities = new String[]{"可以占领建筑物（城堡除外）", 
+            "在水中获得攻防属性加成", 
+            "在森林中获得攻防属性加成", 
+            "在山区获得攻防属性加成",
+            "可以破坏建筑物",
+            "飞行单位，无视地形以及地面单位阻挡，可被空军单位阻挡",
+            "可以从墓碑中召唤骷髅战士",
+            "回合开始附近单位回复血量",
+            "攻击后可以继续使用一次剩余的移动力但不能攻击",
+            "攻击使目标中毒每回合开始损失血量",
+            "可以修复被破坏的建筑物",
+            "攻击使目标降低攻击力和防御力",
+            "攻击空军单位时伤害增加",
+            "在水中移动消耗移动力1并每回合回复血量",
+            "在森林中移动消耗移动力1并每回合回复血量",
+            "在山区移动消耗移动力1并每回合回复血量",
+            "在陆地上移动移动力消耗均为1",
+            "攻击使目标移动力降低",
+            "可以占领城堡",
+            "每回合移动/攻击二选一",
+            "回合开始增加附近友军攻击力",
+            "回合开始增加附近友军防御力",
+            "回合开始增加附近友军移动力",
+            "死亡时全军回复生命值",
+            "回合开始降低附近敌方防御力"};
+      
+        jl_abilities = new JList(abilities);
+        jl_abilities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jl_abilities.setBorder(BorderFactory.createTitledBorder("所有的特殊能力"));
+        
+        base_abilities = new Vector();
+        learnable_abilities = new Vector();
+        
+        jl_base_abilities = new JList();
+        jl_base_abilities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jl_base_abilities.setBorder(BorderFactory.createTitledBorder("基础特殊能力"));
+//        base_abilities.addElement("深思");
+        
+        jl_learnable_abilities = new JList();
+        jl_learnable_abilities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jl_learnable_abilities.setBorder(BorderFactory.createTitledBorder("可学习特殊能力"));
+        
+        sp_abilities = new JScrollPane(jl_abilities);
+        sp_abilities.setBounds(290, 10, 180, 550);
+        
+        sp_base_abilities = new JScrollPane(jl_base_abilities);
+        sp_base_abilities.setBounds(10, 20, 200, 250);
+        
+        sp_learnable_abilities = new JScrollPane(jl_learnable_abilities);
+        sp_learnable_abilities.setBounds(10, 300, 200, 260);
+        
+        base_into = new JButton("<---");
+        base_into.setBounds(220,80,60,30);
+        base_into.addActionListener(new Add_Abilities(this));
+        base_out = new JButton("--->");
+        base_out.setBounds(220,120,60,30);
+        base_out.addActionListener(new Add_Abilities(this));
+        learnable_into = new JButton("<---");
+        learnable_into.setBounds(220,360,60,30);
+        learnable_into.addActionListener(new Add_Abilities(this));
+        learnable_out = new JButton("--->");
+        learnable_out.setBounds(220,400,60,30);
+        learnable_out.addActionListener(new Add_Abilities(this));
+        
+        jp_abilities.add(sp_abilities);
+        jp_abilities.add(sp_base_abilities);
+        jp_abilities.add(sp_learnable_abilities);
+        
+        jp_abilities.add(base_into);
+        jp_abilities.add(base_out);
+        jp_abilities.add(learnable_into);
+        jp_abilities.add(learnable_out);
+//        jc_abilities = new JComboBox(str_abilities);
+//        jc_abilities.setBorder(BorderFactory.createTitledBorder("自带特殊能力"));
+//        str_learnable_abilities = new String[]{"None", "可以占领建筑物（城堡除外）", "在水中获得攻防属性加成", "在森林中获得攻防属性加成", "在山区获得攻防属性加成"};
+//        jc_learnable_abilities = new JComboBox(str_learnable_abilities);
+//        jc_learnable_abilities.setBorder(BorderFactory.createTitledBorder("可学习特殊能力"));
+////        jc_abilities.setBounds(0, 0, 100, 400);
+//        jp_abilities.add(jc_abilities);
+//        jp_abilities.add(jc_learnable_abilities);
         return jp_abilities;
     }
 
@@ -317,7 +413,42 @@ public class Troop_Attribute {
         }
         return null;
     }
+    
+    public JButton getBaseInto() {
+        return base_into;
+    }
 
+    public JButton getBaseOut() {
+        return base_out;
+    }
+    
+    public JButton getLearnableInto() {
+        return learnable_into;
+    }
+    
+    public JButton getLearnableOut() {
+        return learnable_out;
+    }
+    
+    public Vector getBaseAbilities () {
+        return base_abilities;
+    }
+    
+    public Vector getLearnableAbilities() {
+        return learnable_abilities;
+    }
+    
+    public JList getJlAbilities() {
+        return jl_abilities;
+    }
+    
+    public JList getJlBaseAbilities() {
+        return jl_base_abilities;
+    }
+    
+    public JList getJlLearnableAbilities() {
+        return jl_learnable_abilities;
+    }
     /*    public String getAbilities() {
         
      }*/

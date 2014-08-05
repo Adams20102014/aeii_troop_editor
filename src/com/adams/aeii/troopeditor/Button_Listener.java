@@ -42,10 +42,12 @@ class Button_Listener implements ActionListener {
     private final Troop_Attribute pte;
     private Image image;
     private JLabel jl_image;
+    private Troop_Editor te;
     
-    public Button_Listener(Troop_Attribute pte,JLabel jl_image) {
+    public Button_Listener(Troop_Attribute pte,JLabel jl_image,Troop_Editor te) {
         this.pte = pte;
         this.jl_image = jl_image;
+        this.te = te;
     }
 
     
@@ -77,7 +79,7 @@ class Button_Listener implements ActionListener {
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         if(e.getActionCommand().equals("打开兵种文件")) {
             fileChooser = new JFileChooser("打开文件");
-            int state = fileChooser.showOpenDialog(fileChooser);
+            int state = fileChooser.showOpenDialog(te);
             if(state == JFileChooser.APPROVE_OPTION) {
                 try {
                     int i = 0;
@@ -147,7 +149,7 @@ class Button_Listener implements ActionListener {
             
         }else if(e.getActionCommand().equals("保存兵种文件")) {
             fileChooser = new JFileChooser("保存文件");
-            int state = fileChooser.showSaveDialog(fileChooser);
+            int state = fileChooser.showSaveDialog(te);
             if(state== JFileChooser.APPROVE_OPTION){
                 try{
                     file = fileChooser.getSelectedFile();
@@ -161,10 +163,6 @@ class Button_Listener implements ActionListener {
                 }
             }
         }
-    }
-
-    private Icon getTroopImage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
