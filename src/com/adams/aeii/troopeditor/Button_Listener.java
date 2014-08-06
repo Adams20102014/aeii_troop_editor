@@ -44,6 +44,8 @@ class Button_Listener implements ActionListener {
     private final JLabel jl_image;
     private final Troop_Editor te;
     
+    private int index;
+    
     public Button_Listener(Troop_Attribute pte,JLabel jl_image,Troop_Editor te) {
         this.pte = pte;
         this.jl_image = jl_image;
@@ -89,6 +91,7 @@ class Button_Listener implements ActionListener {
                     FileReader read = new FileReader(file);
                     BufferedReader buRead = new BufferedReader(read);
                     while((temp = buRead.readLine()) != null) {
+                        temp = temp.trim();
                         if(i == 0) {
                             price = temp;
                             i++;
@@ -131,6 +134,30 @@ class Button_Listener implements ActionListener {
                             i++;
                         }else if(i == 13) {
                             min_attack_range = temp;
+                            i++;
+                        }else if(i == 14) {
+                            pte.clearJlBaseAbilities();
+                            index = Integer.parseInt((temp));
+                            String new_temp = "";
+//                            System.out.println(index);
+                            for(int j = 0; j < index; j++) {
+                                if((new_temp = buRead.readLine()) != null) {
+                                    new_temp = new_temp.trim();
+                                    pte.initJlBaseAbilities(Integer.parseInt(new_temp));
+                                }
+                            }
+                            i++;
+                        }else if(i == 15) {
+                            pte.clearJlLearnableAbilities();
+                            index = Integer.parseInt((temp));
+                            String new_temp = "";
+//                            System.out.println(index);
+                            for(int j = 0; j < index; j++) {
+                                if((new_temp = buRead.readLine()) != null) {
+                                    new_temp = new_temp.trim();
+                                    pte.initJlLearnableAbilities(Integer.parseInt(new_temp));
+                                }
+                            }
                             i++;
                         }
                     }

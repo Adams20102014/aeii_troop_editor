@@ -161,6 +161,25 @@ public class Troop_Attribute {
         }
     }
 
+    public void initJlBaseAbilities(int index) {
+        base_abilities.add(abilities[index]);
+        jl_base_abilities.setListData(base_abilities);
+    }
+    
+    public void initJlLearnableAbilities (int index) {
+        learnable_abilities.add(abilities[index]);
+        jl_learnable_abilities.setListData(learnable_abilities);
+    }
+    
+    public void clearJlBaseAbilities()  {
+        base_abilities.removeAllElements();
+        jl_base_abilities.setListData(base_abilities);
+    }
+    
+    public void clearJlLearnableAbilities() {
+        learnable_abilities.removeAllElements();
+        jl_learnable_abilities.setListData(learnable_abilities);
+    }
     /*    public void initJComboBox() {
         
      }
@@ -267,7 +286,8 @@ public class Troop_Attribute {
         jp_abilities = new JPanel();
         jp_abilities.setLayout(null);
         jp_abilities.setBorder(BorderFactory.createTitledBorder("特殊能力设定"));
-        abilities = new String[]{"可以占领建筑物（城堡除外）", 
+        abilities = new String[]{
+            "可以占领建筑物（城堡除外）", 
             "在水中获得攻防属性加成", 
             "在森林中获得攻防属性加成", 
             "在山区获得攻防属性加成",
