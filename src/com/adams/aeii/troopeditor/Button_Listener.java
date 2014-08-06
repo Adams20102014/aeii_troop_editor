@@ -35,6 +35,11 @@ class Button_Listener implements ActionListener {
     private String troop_info;
     
     private String troop_dat;
+    
+    private String base_abilities_counts;
+    private String learnable_abilities_counts;
+    private String str_base_abilities;
+    private String str_learnable_abilities;
 //  private String abilities;  
    
     File file ;
@@ -68,11 +73,32 @@ class Button_Listener implements ActionListener {
         magical_defence_growth = pte.getJfMagicalDefenceGrowth();
         max_attack_range = pte.getJfMaxAttackRange();
         min_attack_range = pte.getJfMinAttackRange();
+        base_abilities_counts = pte.getBaseAbilitiesCounts();
+        learnable_abilities_counts = pte.getLearnableAbilitiesCounts();
+        str_base_abilities = pte.getStrBaseAbilities();
+        str_learnable_abilities = pte.getStrLearnableAbilities();
     }
     
     public String getTroopInfo () {
         this.getString();
-        troop_info = price + "\r\n" + max_hp + "\r\n" + movement_point + "\r\n" + attack + "\r\n" + physical_defence + "\r\n" + magical_defence + "\r\n" + attack_type + "\r\n" + hp_growth + "\r\n" + movement_growth + "\r\n" + attack_growth + "\r\n" + physical_defence_growth + "\r\n" + magical_defence_growth + "\r\n" + max_attack_range + "\r\n" + min_attack_range;
+        troop_info = price + "\r\n" 
+                + max_hp + "\r\n" 
+                + movement_point + "\r\n" 
+                + attack + "\r\n" 
+                + physical_defence + "\r\n" 
+                + magical_defence + "\r\n" 
+                + attack_type + "\r\n" 
+                + hp_growth + "\r\n" 
+                + movement_growth + "\r\n" 
+                + attack_growth + "\r\n" 
+                + physical_defence_growth + "\r\n" 
+                + magical_defence_growth + "\r\n" 
+                + max_attack_range + "\r\n" 
+                + min_attack_range + "\r\n" 
+                + base_abilities_counts
+                + str_base_abilities + "\r\n"
+                + learnable_abilities_counts
+                + str_learnable_abilities;
         return troop_info;
     }
     

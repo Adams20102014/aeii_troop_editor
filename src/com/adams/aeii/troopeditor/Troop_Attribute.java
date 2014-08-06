@@ -51,7 +51,7 @@ public class Troop_Attribute {
     private JLabel jl_max_attack_range;
     private JLabel jl_min_attack_range;
 
-   // private JLabel abilities;
+    // private JLabel abilities;
     // private JLabel learnable_abilities;
     private JTextField jf_price;
 
@@ -81,7 +81,7 @@ public class Troop_Attribute {
     private JList jl_abilities;
     private JList jl_base_abilities;
     private JList jl_learnable_abilities;
-    
+
     private JButton base_into;
     private JButton base_out;
     private JButton learnable_into;
@@ -93,11 +93,15 @@ public class Troop_Attribute {
 //    private String[] str_learnable_abilities;
 
 //    private Image image;
-    
     private JScrollPane sp_abilities;
     private JScrollPane sp_base_abilities;
     private JScrollPane sp_learnable_abilities;
-    
+
+    private int base_abilities_counts;
+    private int learnable_abilities_counts;
+    private String str_base_abilities;
+    private String str_learnable_abilities;
+
     public Troop_Attribute() {
 
     }
@@ -110,8 +114,8 @@ public class Troop_Attribute {
         return jt_troop_editor;
     }
 
-    public JPanel initJpDatabase () {
-        jp_database = new JPanel ();
+    public JPanel initJpDatabase() {
+        jp_database = new JPanel();
         jp_database.setLayout(null);
         jp_database.add(initJpPrice());
         jp_database.add(initJpHp());
@@ -122,6 +126,7 @@ public class Troop_Attribute {
         jp_database.add(initJpAttackType());
         return jp_database;
     }
+
     public void initJTextField(String price, String max_hp, String movement_point, String attack, String physical_defence, String magical_defence, String hp_growth, String movement_growth, String attack_growth, String physical_defence_growth, String magical_defence_growth, String max_attack_range, String min_attack_range) {
         jf_price.setText(price);
         jf_max_hp.setText(max_hp);
@@ -165,17 +170,17 @@ public class Troop_Attribute {
         base_abilities.add(abilities[index]);
         jl_base_abilities.setListData(base_abilities);
     }
-    
-    public void initJlLearnableAbilities (int index) {
+
+    public void initJlLearnableAbilities(int index) {
         learnable_abilities.add(abilities[index]);
         jl_learnable_abilities.setListData(learnable_abilities);
     }
-    
-    public void clearJlBaseAbilities()  {
+
+    public void clearJlBaseAbilities() {
         base_abilities.removeAllElements();
         jl_base_abilities.setListData(base_abilities);
     }
-    
+
     public void clearJlLearnableAbilities() {
         learnable_abilities.removeAllElements();
         jl_learnable_abilities.setListData(learnable_abilities);
@@ -184,6 +189,7 @@ public class Troop_Attribute {
         
      }
      */
+
     public JPanel initJpHp() {
         jp_hp = new JPanel(new GridLayout(2, 2));
         jp_hp.setBorder(BorderFactory.createTitledBorder("HP值设定"));
@@ -195,7 +201,7 @@ public class Troop_Attribute {
         jp_hp.add(jf_max_hp);
         jp_hp.add(jl_hp_growth);
         jp_hp.add(jf_hp_growth);
-        jp_hp.setBounds(10,65,200,70);
+        jp_hp.setBounds(10, 65, 200, 70);
 //        jp_hp.setPreferredSize();
         return jp_hp;
     }
@@ -211,7 +217,7 @@ public class Troop_Attribute {
         jp_movement.add(jf_movement_point);
         jp_movement.add(jl_movement_growth);
         jp_movement.add(jf_movement_growth);
-        jp_movement.setBounds(10,140,250,70);
+        jp_movement.setBounds(10, 140, 250, 70);
         return jp_movement;
     }
 
@@ -226,7 +232,7 @@ public class Troop_Attribute {
         jp_attack.add(jf_attack);
         jp_attack.add(jl_attack_growth);
         jp_attack.add(jf_attack_growth);
-        jp_attack.setBounds(10,215,250,70);
+        jp_attack.setBounds(10, 215, 250, 70);
         return jp_attack;
     }
 
@@ -249,7 +255,7 @@ public class Troop_Attribute {
         jp_defence.add(jf_magical_defence);
         jp_defence.add(jl_magical_defence_growth);
         jp_defence.add(jf_magical_defence_growth);
-        jp_defence.setBounds(10,290,250,120);
+        jp_defence.setBounds(10, 290, 250, 120);
         return jp_defence;
     }
 
@@ -264,7 +270,7 @@ public class Troop_Attribute {
         jp_attack_range.add(jf_max_attack_range);
         jp_attack_range.add(jl_min_attack_range);
         jp_attack_range.add(jf_min_attack_range);
-        jp_attack_range.setBounds(10,415,250,70);
+        jp_attack_range.setBounds(10, 415, 250, 70);
         return jp_attack_range;
     }
 
@@ -278,7 +284,7 @@ public class Troop_Attribute {
         bg_attack_type.add(jr_magical);
         jp_attack_type.add(jr_physical);
         jp_attack_type.add(jr_magical);
-        jp_attack_type.setBounds(10,490,300,50);
+        jp_attack_type.setBounds(10, 490, 300, 50);
         return jp_attack_type;
     }
 
@@ -287,9 +293,9 @@ public class Troop_Attribute {
         jp_abilities.setLayout(null);
         jp_abilities.setBorder(BorderFactory.createTitledBorder("特殊能力设定"));
         abilities = new String[]{
-            "可以占领建筑物（城堡除外）", 
-            "在水中获得攻防属性加成", 
-            "在森林中获得攻防属性加成", 
+            "可以占领建筑物（城堡除外）",
+            "在水中获得攻防属性加成",
+            "在森林中获得攻防属性加成",
             "在山区获得攻防属性加成",
             "可以破坏建筑物",
             "飞行单位，无视地形以及地面单位阻挡，可被空军单位阻挡",
@@ -312,49 +318,49 @@ public class Troop_Attribute {
             "回合开始增加附近友军移动力",
             "死亡时全军回复生命值",
             "回合开始降低附近敌方防御力"};
-      
+
         jl_abilities = new JList(abilities);
         jl_abilities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jl_abilities.setBorder(BorderFactory.createTitledBorder("所有的特殊能力"));
-        
+
         base_abilities = new Vector();
         learnable_abilities = new Vector();
-        
+
         jl_base_abilities = new JList();
         jl_base_abilities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jl_base_abilities.setBorder(BorderFactory.createTitledBorder("基础特殊能力"));
 //        base_abilities.addElement("深思");
-        
+
         jl_learnable_abilities = new JList();
         jl_learnable_abilities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jl_learnable_abilities.setBorder(BorderFactory.createTitledBorder("可学习特殊能力"));
-        
+
         sp_abilities = new JScrollPane(jl_abilities);
         sp_abilities.setBounds(290, 10, 180, 550);
-        
+
         sp_base_abilities = new JScrollPane(jl_base_abilities);
         sp_base_abilities.setBounds(10, 20, 200, 250);
-        
+
         sp_learnable_abilities = new JScrollPane(jl_learnable_abilities);
         sp_learnable_abilities.setBounds(10, 300, 200, 260);
-        
+
         base_into = new JButton("<---");
-        base_into.setBounds(220,80,60,30);
+        base_into.setBounds(220, 80, 60, 30);
         base_into.addActionListener(new Add_Abilities(this));
         base_out = new JButton("--->");
-        base_out.setBounds(220,120,60,30);
+        base_out.setBounds(220, 120, 60, 30);
         base_out.addActionListener(new Add_Abilities(this));
         learnable_into = new JButton("<---");
-        learnable_into.setBounds(220,360,60,30);
+        learnable_into.setBounds(220, 360, 60, 30);
         learnable_into.addActionListener(new Add_Abilities(this));
         learnable_out = new JButton("--->");
-        learnable_out.setBounds(220,400,60,30);
+        learnable_out.setBounds(220, 400, 60, 30);
         learnable_out.addActionListener(new Add_Abilities(this));
-        
+
         jp_abilities.add(sp_abilities);
         jp_abilities.add(sp_base_abilities);
         jp_abilities.add(sp_learnable_abilities);
-        
+
         jp_abilities.add(base_into);
         jp_abilities.add(base_out);
         jp_abilities.add(learnable_into);
@@ -430,7 +436,7 @@ public class Troop_Attribute {
         }
         return null;
     }
-    
+
     public JButton getBaseInto() {
         return base_into;
     }
@@ -438,34 +444,87 @@ public class Troop_Attribute {
     public JButton getBaseOut() {
         return base_out;
     }
-    
+
     public JButton getLearnableInto() {
         return learnable_into;
     }
-    
+
     public JButton getLearnableOut() {
         return learnable_out;
     }
-    
-    public Vector getBaseAbilities () {
+
+    public Vector getBaseAbilities() {
         return base_abilities;
     }
-    
+
     public Vector getLearnableAbilities() {
         return learnable_abilities;
     }
-    
+
     public JList getJlAbilities() {
         return jl_abilities;
     }
-    
+
     public JList getJlBaseAbilities() {
         return jl_base_abilities;
     }
-    
+
     public JList getJlLearnableAbilities() {
         return jl_learnable_abilities;
     }
+
+    public void setBaseAbilitiesCounts() {
+        base_abilities_counts = base_abilities.size();
+    }
+
+    public String getBaseAbilitiesCounts() {
+        this.setBaseAbilitiesCounts();
+        return Integer.toString(base_abilities_counts);
+    }
+
+    public void setLearnableAbilitiesCounts() {
+        learnable_abilities_counts = learnable_abilities.size();
+    }
+
+    public String getLearnableAbilitiesCounts() {
+        this.setLearnableAbilitiesCounts();
+        return Integer.toString(learnable_abilities_counts);
+    }
+
+    public String getStrBaseAbilities() {
+        str_base_abilities = "";
+        for (Object base_abilitie : base_abilities) {
+            str_base_abilities = str_base_abilities + "\r\n" + getStrBaseIndex((String) base_abilitie);
+        }
+        return str_base_abilities;
+    }
+
+    public String getStrBaseIndex(String str) {
+        for (int i = 0; i < abilities.length; i++) {
+            if (str.equals(abilities[i])) {
+                return Integer.toString(i);
+            }
+        }
+        return null;
+    }
+
+    public String getStrLearnableAbilities() {
+        str_learnable_abilities = "";
+        for (Object learnable_abilitie : learnable_abilities) {
+            str_learnable_abilities = str_learnable_abilities + "\r\n" + getStrLearnableIndex((String) learnable_abilitie);
+        }
+        return str_learnable_abilities;
+    }
+
+    public String getStrLearnableIndex(String str) {
+        for (int i = 0; i < abilities.length; i++) {
+            if (str.equals(abilities[i])) {
+                return Integer.toString(i);
+            }
+        }
+        return null;
+    }
+
     /*    public String getAbilities() {
         
      }*/
