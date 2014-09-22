@@ -190,7 +190,6 @@ class Button_Listener implements ActionListener {
                     JOptionPane.showMessageDialog(fileChooser, "打开文件成功！", "提示对话框", JOptionPane.INFORMATION_MESSAGE);
                     pte.initJTextField(price,max_hp, movement_point, attack, physical_defence, magical_defence, hp_growth, movement_growth, attack_growth, physical_defence_growth, magical_defence_growth, max_attack_range, min_attack_range);
                     pte.initJRadioButton(attack_type);
-//                    System.out.println(troop_dat);
                     image = new Image();
                     image.setTroopImage(troop_dat);
                     jl_image.setIcon((Icon) image.getTroopImage());

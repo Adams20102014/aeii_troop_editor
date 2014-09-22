@@ -36,7 +36,7 @@ public final class Image {
     }
 
     public void getUnits() throws IOException {
-        BufferedImage img_unit = ImageIO.read(new File("\\res\\image\\unit\\unit_icons.png"));
+        BufferedImage img_unit = ImageIO.read(new File("res\\image\\unit\\unit_icons.png"));
         units = new BufferedImage[12];
         for (i = 0; i < unit_count; i++) {
             x = 24 * i;
@@ -47,11 +47,9 @@ public final class Image {
     }
 
     public void setTroopImage(String troop) {
-//        System.out.println(troop);
         switch (troop) {
             case "unit_0.dat":
                 troop_image = units[0];
-//                System.out.println("0");
                 break;
             case "unit_1.dat":
                 troop_image = units[1];
