@@ -36,7 +36,7 @@ public final class Image {
     }
 
     public void getUnits() throws IOException {
-        BufferedImage img_unit = ImageIO.read(new File("res\\image\\unit\\unit_icons.png"));
+        BufferedImage img_unit = ImageIO.read(new File("res\\img\\units\\unit_icons_0.png"));
         units = new BufferedImage[12];
         for (i = 0; i < unit_count; i++) {
             x = 24 * i;
